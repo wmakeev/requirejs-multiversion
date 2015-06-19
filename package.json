@@ -1,0 +1,29 @@
+{
+  "name": "requirejs-multiversion",
+  "version": "0.1.0",
+  "description": "Load modules with specified version",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack index.js build/multiversion.js --output-library-target amd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wmakeev/requirejs-multiversion.git"
+  },
+  "keywords": [
+    "requirejs",
+    "semver",
+    "multiversion",
+    "repository"
+  ],
+  "author": "Vitaliy V. Makeev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wmakeev/requirejs-multiversion/issues"
+  },
+  "homepage": "https://github.com/wmakeev/requirejs-multiversion#readme",
+  "dependencies": {
+    "semver": "^4.3.6"
+  }
+}
