@@ -1,6 +1,7 @@
 var semver = require('semver');
 
 module.exports = function multidep () {
+    var protocol = window.location.protocol;
     return {
         load: function (name, parentRequire, onload, config) {
             var dependencies    = config.dependencies;
@@ -30,8 +31,9 @@ module.exports = function multidep () {
                 var versions = Object.keys(dependencies[moduleName]);
                 var version = semver.maxSatisfying(versions, versionRange);
                 if (version) {
-                    var libUrl = dependencies[moduleName][version];
-                    parentRequire(libUrl, onload, onload.error);
+                    var path = dependencies[moduleName][version];
+                    if (path.slice(-3) === '.js') { path = path.slice(0, -3) }
+                    parentRequire(protocol + path, onload, onload.error);
                 }
                 else if (resolver) {
                     resolver.resolve(moduleName, version, function (err, url) {
