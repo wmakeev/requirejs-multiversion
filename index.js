@@ -5,9 +5,11 @@ var protocol = window.location.protocol;
 module.exports = {
 
     load: function (name, parentRequire, onload, config) {
-        var dependencies    = config.dependencies;
-        var resolver        = config.resolver;
-        var isFallBack      = !!config.fallBackToParentRequire;
+        var multiverConfig  = config.config.multiver;
+
+        var dependencies    = multiverConfig.dependencies;
+        var resolver        = multiverConfig.resolver;
+        var isFallBack      = !!multiverConfig.fallBackToParentRequire;
 
         if (name.indexOf('@') === -1) {
             name = name + '@default';
