@@ -26,13 +26,23 @@ module.exports = {
         var moduleName    = nameVer[0],
             versionRange  = nameVer[1];
 
-        if (!semver.validRange(versionRange)) {
-            onload.error(new Error('Invalid semver version range [' + versionRange + ']'))
-        }
-
         if (dependencies[moduleName]) {
             var versions = Object.keys(dependencies[moduleName]);
-            var version = semver.maxSatisfying(versions, versionRange);
+            if (!version.length) {
+                return onload.error(new Error('No versions specified for module [' + moduleName + ']'))
+            }
+
+            var version;
+            if (versionRange === 'default') {
+                version = versions.sort()[versions.length - 1]
+            }
+            else if (!semver.validRange(versionRange)) {
+                return onload.error(new Error('Invalid semver version range [' + versionRange + ']'))
+            }
+            else {
+                version = semver.maxSatisfying(versions, versionRange);
+            }
+
             if (version) {
                 var path = dependencies[moduleName][version];
                 parentRequire([protocol + path], onload, onload.error);
