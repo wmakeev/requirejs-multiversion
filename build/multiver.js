@@ -79,7 +79,6 @@ define(function() { return /******/ (function(modules) { // webpackBootstrap
 	            var version = semver.maxSatisfying(versions, versionRange);
 	            if (version) {
 	                var path = dependencies[moduleName][version];
-	                if (path.slice(-3) === '.js') { path = path.slice(0, -3) }
 	                parentRequire(protocol + path, onload, onload.error);
 	            }
 	            else if (resolver) {
