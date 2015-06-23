@@ -29,12 +29,13 @@ module.exports = {
 
         if (dependencies[moduleName]) {
             var versions = Object.keys(dependencies[moduleName]);
-            if (!version.length) {
+            if (!versions.length) {
                 return onload.error(new Error('No versions specified for module [' + moduleName + ']'))
             }
 
             var version;
             if (versionRange === 'default') {
+                // TODO already loaded or max version
                 version = versions.sort()[versions.length - 1]
             }
             else if (!semver.validRange(versionRange)) {
