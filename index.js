@@ -35,16 +35,16 @@ module.exports = {
             var version = semver.maxSatisfying(versions, versionRange);
             if (version) {
                 var path = dependencies[moduleName][version];
-                parentRequire(protocol + path, onload, onload.error);
+                parentRequire([protocol + path], onload, onload.error);
             }
             else if (resolver) {
                 resolver.resolve(moduleName, version, function (err, url) {
                     if (err) return onload.error(err);
-                    parentRequire(url, onload, onload.error);
+                    parentRequire([url], onload, onload.error);
                 })
             }
             else if (isFallBack) {
-                parentRequire(moduleName, onload, onload.error);
+                parentRequire([moduleName], onload, onload.error);
             }
             else {
                 onload.error(new Error('Can\'t resolve module [' + moduleName + ']'));
