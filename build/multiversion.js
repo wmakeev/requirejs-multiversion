@@ -44,96 +44,64 @@ define(function() { return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var discover = __webpack_require__(1);
-	var semver = __webpack_require__(2);
+	var semver = __webpack_require__(1);
 
 	module.exports = function multidep () {
-
 	    return {
-
 	        load: function (name, parentRequire, onload, config) {
-	            var dependencies = config.dependencies;
-	            if (name.indexOf('@') !== -1) {
-	                // need to resolve the dependency
-	                var nameVer = name.split('@');
-	                // i.e. module@^1.0.0
-	                if (nameVer.length === 2) {
-	                    var moduleName    = nameVer[0],
-	                        versionRange  = nameVer[1];
+	            var dependencies    = config.dependencies;
+	            var resolver        = config.resolver;
+	            var isFallBack      = !!config.fallBackToParentRequire;
 
-	                    if (semver.validRange(versionRange)) {
-	                        if (dependencies[moduleName]) {
-	                            var versions = Object.keys(dependencies[moduleName]);
-	                            var version = semver.maxSatisfying(versions, versionRange);
-	                            if (version) {
-	                                var libUrl = dependencies[moduleName][version];
-	                                parentRequire([libUrl], onload, onload.error);
-	                            } else {
-	                                discover('module', function (ev) {
-	                                    return ev.name === moduleName ? semver.satisfies(ev.version, versionRange) : false;
-	                                }).then(function (ev) {
-	                                    onload(ev.module);
-	                                }).catch(onload.error);
-	                            }
-	                        } else {
-	                            // TODO find module
-	                            onload.error(new Error('Can\'t find applicable module for [' + name + '] in repository'));
-	                        }
-	                    }
+	            if (name.indexOf('@') === -1) {
+	                name = name + '@default';
+	            }
 
-	                } else {
-	                    onload.error(new Error('Module query must contain only one "@" symbol'));
+	            // need to resolve the dependency
+	            var nameVer = name.split('@');
+
+	            // i.e. module@^1.0.0
+	            if (nameVer.length !== 2) {
+	                return onload.error(new Error('Module query must contain only one "@" symbol'));
+	            }
+
+	            var moduleName    = nameVer[0],
+	                versionRange  = nameVer[1];
+
+	            if (!semver.validRange(versionRange)) {
+	                onload.error(new Error('Invalid semver version range [' + versionRange + ']'))
+	            }
+
+	            if (dependencies[moduleName]) {
+	                var versions = Object.keys(dependencies[moduleName]);
+	                var version = semver.maxSatisfying(versions, versionRange);
+	                if (version) {
+	                    var libUrl = dependencies[moduleName][version];
+	                    parentRequire(libUrl, onload, onload.error);
+	                }
+	                else if (resolver) {
+	                    resolver.resolve(moduleName, version, function (err, url) {
+	                        if (err) return onload.error(err);
+	                        parentRequire(url, onload, onload.error);
+	                    })
+	                }
+	                else if (isFallBack) {
+	                    parentRequire(moduleName, onload, onload.error);
+	                }
+	                else {
+	                    onload.error(new Error('Can\'t resolve module [' + moduleName + ']'));
 	                }
 	            }
+	            else {
+	                // TODO find module
+	                onload.error(new Error('Can\'t find applicable module for [' + name + '] in repository'));
+	            }
 	        }
-
 	    }
 	};
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(module) {var locatorGuid = __webpack_require__(3).guid;
-
-	module.export = function discover (key, predicate, timeout) {
-	    var publishKey  = locatorGuid + ':publish';
-	    var discoverKey = locatorGuid + ':discover';
-	    if (typeof predicate === 'number') {
-	        timeout = predicate;
-	        predicate = null;
-	    }
-	    return new Promise(function (resolve, reject) {
-	        var listener = function (ev) {
-	            ev = ev.detail;
-	            if (ev && ev.type === publishKey && ev.key === key) {
-	                if (predicate ? predicate(ev.value) : true) {
-	                    window.removeEventListener(publishKey, listener);
-	                    resolve(ev.value);
-	                }
-	            }
-	        };
-	        window.addEventListener(publishKey, listener);
-	        var event = new CustomEvent(discoverKey, {
-	            detail: {
-	                id: Math.random(),
-	                type: discoverKey,
-	                key: predicate
-	            }
-	        });
-	        window.dispatchEvent(event);
-	        if (timeout) {
-	            setTimeout(function () {
-	                window.removeEventListener(publishKey, listener);
-	                reject(new Error('discover for [' + predicate + '] timeout'))
-	            }, timeout * 1000)
-	        }
-	    })
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
-
-/***/ },
-/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;;(function(exports) {
@@ -1337,30 +1305,6 @@ define(function() { return /******/ (function(modules) { // webpackBootstrap
 	  typeof define === 'function' && define.amd ? {} :
 	  semver = {}
 	);
-
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-	  "guid": "70152108-2745-4c6a-b529-c4fe10e488a7"
-	};
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
 
 
 /***/ }
