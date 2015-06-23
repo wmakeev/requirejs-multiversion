@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack index.js build/multiversion.js --output-library-target amd"
+    "build": "webpack index.js build/multiver.js --output-library-target amd"
   },
   "repository": {
     "type": "git",
