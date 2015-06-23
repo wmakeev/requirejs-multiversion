@@ -1,4 +1,4 @@
-var semver = require('semver');
+var semver = require('./vendor/semver');
 
 var protocol = window.location.protocol;
 
