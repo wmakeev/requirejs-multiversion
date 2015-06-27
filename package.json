@@ -23,8 +23,5 @@
   "bugs": {
     "url": "https://github.com/wmakeev/requirejs-multiversion/issues"
   },
-  "homepage": "https://github.com/wmakeev/requirejs-multiversion#readme",
-  "dependencies": {
-    "semver": "^4.3.6"
-  }
+  "homepage": "https://github.com/wmakeev/requirejs-multiversion#readme"
 }
