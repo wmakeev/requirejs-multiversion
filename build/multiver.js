@@ -87,12 +87,12 @@ module.exports = {
           parentRequire([moduleName], onload, onload.error);
         }
         else {
-          onload.error(new Error('Can\'t resolve module [' + moduleName + ']'));
+          onload.error(new Error('Can\'t resolve module [' + name + ']'));
         }
       }
       else {
         // TODO find module
-        onload.error(new Error('Can\'t find applicable module for [' + name + '] in repository'));
+        onload.error(new Error('Can\'t find applicable module for [' + moduleName + '] in repository'));
       }
     });
 
