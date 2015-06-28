@@ -1,6 +1,6 @@
 {
   "name": "requirejs-multiversion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Load modules with specified version",
   "main": "index.js",
   "scripts": {
