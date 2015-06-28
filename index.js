@@ -54,8 +54,8 @@ module.exports = {
       var moduleName = nameVer[0],
           versionRange = nameVer[1];
 
-      if (repository[moduleName]) {
-        var versions = Object.keys(repository[moduleName]);
+      if (repository.modules[moduleName]) {
+        var versions = Object.keys(repository.modules[moduleName]);
         if (!versions.length) {
           return onload.error(new Error('No versions specified for module [' + moduleName + ']'))
         }
@@ -73,7 +73,7 @@ module.exports = {
         }
 
         if (version) {
-          var path = repository[moduleName][version];
+          var path = repository.modules[moduleName][version];
           parentRequire([protocol + path], onload, onload.error);
         }
         else if (resolver) {
