@@ -4,7 +4,7 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports.getModuleRequest = getModuleRequest;
+exports['default'] = getModuleRequest;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -119,6 +119,8 @@ function getModuleRequest(name, parentRequire, config) {
   }, null, this, [[2, 8], [17, 24], [28, 34]]);
 }
 
+module.exports = exports['default'];
+
 // multiver!#repository -> repository obj
 
 // try to find module in repository
@@ -131,7 +133,7 @@ function getModuleRequest(name, parentRequire, config) {
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports.getRepository = getRepository;
+exports['default'] = getRepository;
 var repositoryCache = new WeakMap();
 
 function getRepository(parentRequire, multiverConfig) {
@@ -163,6 +165,8 @@ function getRepository(parentRequire, multiverConfig) {
   });
 }
 
+module.exports = exports['default'];
+
 },{}],3:[function(require,module,exports){
 'use strict';
 
@@ -191,7 +195,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports.lookupModule = lookupModule;
+exports['default'] = lookupModule;
 
 function lookupModule(parentRequire, repository, moduleName, moduleVersionRange) {
   return new Promise(function (resolve, reject) {
@@ -225,13 +229,15 @@ function lookupModule(parentRequire, repository, moduleName, moduleVersionRange)
   });
 }
 
+module.exports = exports['default'];
+
 },{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.resolveModule = resolveModule;
+exports["default"] = resolveModule;
 
 function resolveModule(resolver, moduleName, moduleVersionRange) {
   return new Promise(function (resolve, reject) {
@@ -248,6 +254,8 @@ function resolveModule(resolver, moduleName, moduleVersionRange) {
     }
   });
 }
+
+module.exports = exports["default"];
 
 },{}]},{},[3])(3)
 });
