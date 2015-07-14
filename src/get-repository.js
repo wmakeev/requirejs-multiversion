@@ -1,3 +1,4 @@
+ const protocol = window.location.protocol;
  let repositoryCache = new WeakMap();
 
  export default function getRepository(parentRequire, multiverConfig) {

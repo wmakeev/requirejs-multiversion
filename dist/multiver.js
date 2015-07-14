@@ -142,6 +142,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports['default'] = getRepository;
+var protocol = window.location.protocol;
 var repositoryCache = new WeakMap();
 
 function getRepository(parentRequire, multiverConfig) {
