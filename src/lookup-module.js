@@ -1,4 +1,4 @@
-export function lookupModule(parentRequire, repository, moduleName, moduleVersionRange) {
+export default function lookupModule(parentRequire, repository, moduleName, moduleVersionRange) {
   return new Promise((resolve, reject) => {
     if (!repository || !repository.modules) {
       return reject(new Error('Repository should have modules section'));

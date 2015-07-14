@@ -1,6 +1,6 @@
  let repositoryCache = new WeakMap();
 
- export function getRepository(parentRequire, multiverConfig) {
+ export default function getRepository(parentRequire, multiverConfig) {
   return new Promise((resolve, reject) => {
     let cachedRepo = repositoryCache.get(parentRequire);
     // return cached repository if present

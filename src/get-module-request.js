@@ -1,13 +1,13 @@
-import getRepository from './get-repository'
-import lookupModule from './lookup-module'
-import resolveModule from './resolve-module'
+import getRepository  from './get-repository'
+import lookupModule   from './lookup-module'
+import resolveModule  from './resolve-module'
 
 // https://regex101.com/r/wM7aS1/2
 const moduleNameRegex = /^((?:@[\w\-]+\/)?[\w\-]+)(?:@([^\n]+))?$/;
 const protocol = window.location.protocol;
 
 
-export async function getModuleRequest(name, parentRequire, config) {
+export default async function getModuleRequest(name, parentRequire, config) {
   let multiverConfig = config.config.multiver;
 
   let repository;

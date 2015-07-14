@@ -1,4 +1,4 @@
-export function resolveModule(resolver, moduleName, moduleVersionRange) {
+export default function resolveModule(resolver, moduleName, moduleVersionRange) {
   return new Promise(function (resolve, reject) {
     if (resolver) {
       resolver.resolve(moduleName, moduleVersionRange, function (err, name) {
