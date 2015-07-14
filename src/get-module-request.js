@@ -10,10 +10,15 @@ const protocol = window.location.protocol;
 export default async function getModuleRequest(name, parentRequire, config) {
   let multiverConfig = config.config.multiver;
 
+
   let repository;
-  try {
-    repository = await getRepository(parentRequire, multiverConfig);
-  } catch (e) {}
+  if (multiverConfig.repository) {
+    try {
+      repository = await getRepository(parentRequire, multiverConfig);
+    } catch (e) {
+      console.debug(`Can't load repository -`, e);
+    }
+  }
 
   // multiver!#repository -> repository obj
   if (name === '#repository') {
@@ -32,7 +37,7 @@ export default async function getModuleRequest(name, parentRequire, config) {
     path = await lookupModule(parentRequire, repository, moduleName, moduleVersionRange);
     path = protocol + path;
   } catch (e) {
-    console.debug(`Can't find module in repository`, e);
+    console.debug(`Can't find module ${name} in repository -`, e);
   }
 
   // try to resolve module with resolver
@@ -40,7 +45,8 @@ export default async function getModuleRequest(name, parentRequire, config) {
     try {
       path = await resolveModule(multiverConfig.resolver, moduleName, moduleVersionRange);
     } catch (e) {
-      console.debug(`Can't resolve module with resolver`, e);
+      console.debug(
+        `Can't resolve module ${name} with resolver -`, e);
     }
   }
 

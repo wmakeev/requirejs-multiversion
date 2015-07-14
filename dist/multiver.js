@@ -31,92 +31,100 @@ function getModuleRequest(name, parentRequire, config) {
       case 0:
         multiverConfig = config.config.multiver;
         repository = undefined;
-        context$1$0.prev = 2;
-        context$1$0.next = 5;
+
+        if (!multiverConfig.repository) {
+          context$1$0.next = 12;
+          break;
+        }
+
+        context$1$0.prev = 3;
+        context$1$0.next = 6;
         return regeneratorRuntime.awrap((0, _getRepository2['default'])(parentRequire, multiverConfig));
 
-      case 5:
+      case 6:
         repository = context$1$0.sent;
-        context$1$0.next = 10;
+        context$1$0.next = 12;
         break;
 
-      case 8:
-        context$1$0.prev = 8;
-        context$1$0.t0 = context$1$0['catch'](2);
+      case 9:
+        context$1$0.prev = 9;
+        context$1$0.t0 = context$1$0['catch'](3);
 
-      case 10:
+        console.debug('Can\'t load repository -', context$1$0.t0);
+
+      case 12:
         if (!(name === '#repository')) {
-          context$1$0.next = 12;
+          context$1$0.next = 14;
           break;
         }
 
         return context$1$0.abrupt('return', onload(repository));
 
-      case 12:
+      case 14:
         isFallBack = !!multiverConfig.fallBackToParentRequire;
         match = name.match(moduleNameRegex);
         moduleName = match[1];
         moduleVersionRange = match[2];
         path = undefined;
-        context$1$0.prev = 17;
-        context$1$0.next = 20;
+        context$1$0.prev = 19;
+        context$1$0.next = 22;
         return regeneratorRuntime.awrap((0, _lookupModule2['default'])(parentRequire, repository, moduleName, moduleVersionRange));
 
-      case 20:
+      case 22:
         path = context$1$0.sent;
 
         path = protocol + path;
-        context$1$0.next = 27;
+        context$1$0.next = 29;
         break;
 
-      case 24:
-        context$1$0.prev = 24;
-        context$1$0.t1 = context$1$0['catch'](17);
+      case 26:
+        context$1$0.prev = 26;
+        context$1$0.t1 = context$1$0['catch'](19);
 
-        console.debug('Can\'t find module in repository', context$1$0.t1);
+        console.debug('Can\'t find module ' + name + ' in repository -', context$1$0.t1);
 
-      case 27:
+      case 29:
         if (path) {
-          context$1$0.next = 37;
+          context$1$0.next = 39;
           break;
         }
 
-        context$1$0.prev = 28;
-        context$1$0.next = 31;
+        context$1$0.prev = 30;
+        context$1$0.next = 33;
         return regeneratorRuntime.awrap((0, _resolveModule2['default'])(multiverConfig.resolver, moduleName, moduleVersionRange));
 
-      case 31:
+      case 33:
         path = context$1$0.sent;
-        context$1$0.next = 37;
+        context$1$0.next = 39;
         break;
 
-      case 34:
-        context$1$0.prev = 34;
-        context$1$0.t2 = context$1$0['catch'](28);
+      case 36:
+        context$1$0.prev = 36;
+        context$1$0.t2 = context$1$0['catch'](30);
 
-        console.debug('Can\'t resolve module with resolver', context$1$0.t2);
+        console.debug('Can\'t resolve module ' + name + ' with resolver -', context$1$0.t2);
 
-      case 37:
+      case 39:
 
         if (!path && isFallBack) {
           path = name;
         }
 
         if (!path) {
-          context$1$0.next = 42;
+          context$1$0.next = 44;
           break;
         }
 
         return context$1$0.abrupt('return', path);
 
-      case 42:
+      case 44:
         throw new Error('Can\'t resolve module [' + name + ']');
 
-      case 43:
+      case 45:
       case 'end':
         return context$1$0.stop();
     }
-  }, null, this, [[2, 8], [17, 24], [28, 34]]);
+  }, null, this, [[3, 9], [19, 26], [30, 36]]);
 }
 
 module.exports = exports['default'];
