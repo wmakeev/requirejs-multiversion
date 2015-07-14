@@ -7,15 +7,15 @@ requirejs-multiversion
 
 	```js
 	define({
-        "dependencies": {
-            "lodash": {
-                "2.4.1": "//cdn.jsdelivr.net/lodash/2.4.1/lodash.min.js",
-                "3.0.8": "//cdn.jsdelivr.net/lodash/3.8.0/lodash.min.js"
-            },
-            "moment": {
-                "2.10.3": "//cdn.jsdelivr.net/momentjs/2.10.3/moment.min.js"
-            }
-        }
+    "modules": {
+      "lodash": {
+          "2.4.1": "//cdn.jsdelivr.net/lodash/2.4.1/lodash.min.js",
+          "3.0.8": "//cdn.jsdelivr.net/lodash/3.8.0/lodash.min.js"
+      },
+      "moment": {
+          "2.10.3": "//cdn.jsdelivr.net/momentjs/2.10.3/moment.min.js"
+      }
+    }
     });
 	```
 
@@ -24,7 +24,8 @@ requirejs-multiversion
 	```js
 	requirejs.config({
 	  paths: {
-	    multiver: 'https://path.to/multiver.js'
+	    semver: 'https://path/to/semver',
+	    multiver: 'https://path.to/requirejs-multiversion'
 	  },
 	  config: {
 	    multiver: {

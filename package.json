@@ -1,12 +1,11 @@
 {
   "name": "requirejs-multiversion",
-  "version": "0.1.1",
+  "version": "0.0.3",
   "description": "Load modules with specified version",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify index.js -o build/multiver.js -s multiver",
-    "_build": "webpack index.js build/multiver.js --output-library-target amd"
+    "build": "browserify -e src/index.js -o dist/multiver.js -t [ babelify --stage 1 ] -s multiver"
   },
   "repository": {
     "type": "git",
@@ -23,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/wmakeev/requirejs-multiversion/issues"
   },
-  "homepage": "https://github.com/wmakeev/requirejs-multiversion#readme"
+  "homepage": "https://github.com/wmakeev/requirejs-multiversion#readme",
+  "devDependencies": {
+    "babelify": "^6.1.3"
+  }
 }
