@@ -104,40 +104,6 @@ function getModuleRequest(name, parentRequire, config) {
         console.debug('Can\'t resolve module ' + name + ' with resolver -', context$1$0.t2);
 
       case 38:
-        if (!(!path && path.slice(-3) === '.js')) {
-          context$1$0.next = 49;
-          break;
-        }
-
-        requirePath = path.slice(0, -3);
-        context$1$0.t3 = regeneratorRuntime.keys(config.paths);
-
-      case 41:
-        if ((context$1$0.t4 = context$1$0.t3()).done) {
-          context$1$0.next = 49;
-          break;
-        }
-
-        p = context$1$0.t4.value;
-
-        if (!config.paths.hasOwnProperty(p)) {
-          context$1$0.next = 47;
-          break;
-        }
-
-        if (!(requirePath === config.paths[p])) {
-          context$1$0.next = 47;
-          break;
-        }
-
-        path = p;
-        return context$1$0.abrupt('break', 49);
-
-      case 47:
-        context$1$0.next = 41;
-        break;
-
-      case 49:
 
         if (!path && multiverConfig.fallBackToParentRequire) {
           path = name;
@@ -148,6 +114,40 @@ function getModuleRequest(name, parentRequire, config) {
           break;
         }
 
+        if (!(path.slice(-3) === '.js')) {
+          context$1$0.next = 51;
+          break;
+        }
+
+        requirePath = path.slice(0, -3);
+        context$1$0.t3 = regeneratorRuntime.keys(config.paths);
+
+      case 43:
+        if ((context$1$0.t4 = context$1$0.t3()).done) {
+          context$1$0.next = 51;
+          break;
+        }
+
+        p = context$1$0.t4.value;
+
+        if (!config.paths.hasOwnProperty(p)) {
+          context$1$0.next = 49;
+          break;
+        }
+
+        if (!(requirePath === config.paths[p])) {
+          context$1$0.next = 49;
+          break;
+        }
+
+        path = p;
+        return context$1$0.abrupt('break', 51);
+
+      case 49:
+        context$1$0.next = 43;
+        break;
+
+      case 51:
         return context$1$0.abrupt('return', path);
 
       case 54:
