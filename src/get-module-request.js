@@ -48,8 +48,21 @@ export default async function getModuleRequest(name, parentRequire, config) {
     }
   }
 
+  // check if module for path just defined in requirejs
+  if (!path && path.slice(-3) === '.js') {
+    let requirePath = path.slice(0, -3);
+    for (var p in config.paths) {
+      if (config.paths.hasOwnProperty(p)) {
+        if (requirePath === config.paths[p]) {
+          path = p;
+          break;
+        }
+      }
+    }
+  }
+
   if (!path && multiverConfig.fallBackToParentRequire) {
-    path = moduleName;
+    path = name;
   }
 
   if (path) {

@@ -25,7 +25,7 @@ var moduleNameRegex = /^((?:@[\w\-]+\/)?[\w\-]+)(?:@([^\n]+))?$/;
 var protocol = window.location.protocol;
 
 function getModuleRequest(name, parentRequire, config) {
-  var multiverConfig, repository, match, moduleName, moduleVersionRange, path;
+  var multiverConfig, repository, match, moduleName, moduleVersionRange, path, requirePath, p;
   return regeneratorRuntime.async(function getModuleRequest$(context$1$0) {
     while (1) switch (context$1$0.prev = context$1$0.next) {
       case 0:
@@ -104,22 +104,56 @@ function getModuleRequest(name, parentRequire, config) {
         console.debug('Can\'t resolve module ' + name + ' with resolver -', context$1$0.t2);
 
       case 38:
+        if (!(!path && path.slice(-3) === '.js')) {
+          context$1$0.next = 49;
+          break;
+        }
+
+        requirePath = path.slice(0, -3);
+        context$1$0.t3 = regeneratorRuntime.keys(config.paths);
+
+      case 41:
+        if ((context$1$0.t4 = context$1$0.t3()).done) {
+          context$1$0.next = 49;
+          break;
+        }
+
+        p = context$1$0.t4.value;
+
+        if (!config.paths.hasOwnProperty(p)) {
+          context$1$0.next = 47;
+          break;
+        }
+
+        if (!(requirePath === config.paths[p])) {
+          context$1$0.next = 47;
+          break;
+        }
+
+        path = p;
+        return context$1$0.abrupt('break', 49);
+
+      case 47:
+        context$1$0.next = 41;
+        break;
+
+      case 49:
 
         if (!path && multiverConfig.fallBackToParentRequire) {
-          path = moduleName;
+          path = name;
         }
 
         if (!path) {
-          context$1$0.next = 43;
+          context$1$0.next = 54;
           break;
         }
 
         return context$1$0.abrupt('return', path);
 
-      case 43:
+      case 54:
         throw new Error('Can\'t resolve require request for module [' + name + ']');
 
-      case 44:
+      case 55:
       case 'end':
         return context$1$0.stop();
     }
@@ -133,6 +167,8 @@ module.exports = exports['default'];
 // try to find module in repository
 
 // try to resolve module with resolver
+
+// check if module for path just defined in requirejs
 
 },{"./get-repository":2,"./lookup-module":4,"./resolve-module":5}],2:[function(require,module,exports){
 'use strict';
