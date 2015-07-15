@@ -25,7 +25,7 @@ var moduleNameRegex = /^((?:@[\w\-]+\/)?[\w\-]+)(?:@([^\n]+))?$/;
 var protocol = window.location.protocol;
 
 function getModuleRequest(name, parentRequire, config) {
-  var multiverConfig, repository, isFallBack, match, moduleName, moduleVersionRange, path;
+  var multiverConfig, repository, match, moduleName, moduleVersionRange, path;
   return regeneratorRuntime.async(function getModuleRequest$(context$1$0) {
     while (1) switch (context$1$0.prev = context$1$0.next) {
       case 0:
@@ -61,70 +61,69 @@ function getModuleRequest(name, parentRequire, config) {
         return context$1$0.abrupt('return', onload(repository));
 
       case 14:
-        isFallBack = !!multiverConfig.fallBackToParentRequire;
         match = name.match(moduleNameRegex);
         moduleName = match[1];
         moduleVersionRange = match[2];
         path = undefined;
-        context$1$0.prev = 19;
-        context$1$0.next = 22;
+        context$1$0.prev = 18;
+        context$1$0.next = 21;
         return regeneratorRuntime.awrap((0, _lookupModule2['default'])(parentRequire, repository, moduleName, moduleVersionRange));
 
-      case 22:
+      case 21:
         path = context$1$0.sent;
 
         path = protocol + path;
-        context$1$0.next = 29;
+        context$1$0.next = 28;
         break;
 
-      case 26:
-        context$1$0.prev = 26;
-        context$1$0.t1 = context$1$0['catch'](19);
+      case 25:
+        context$1$0.prev = 25;
+        context$1$0.t1 = context$1$0['catch'](18);
 
         console.debug('Can\'t find module ' + name + ' in repository -', context$1$0.t1);
 
-      case 29:
+      case 28:
         if (path) {
-          context$1$0.next = 39;
+          context$1$0.next = 38;
           break;
         }
 
-        context$1$0.prev = 30;
-        context$1$0.next = 33;
+        context$1$0.prev = 29;
+        context$1$0.next = 32;
         return regeneratorRuntime.awrap((0, _resolveModule2['default'])(multiverConfig.resolver, moduleName, moduleVersionRange));
 
-      case 33:
+      case 32:
         path = context$1$0.sent;
-        context$1$0.next = 39;
+        context$1$0.next = 38;
         break;
 
-      case 36:
-        context$1$0.prev = 36;
-        context$1$0.t2 = context$1$0['catch'](30);
+      case 35:
+        context$1$0.prev = 35;
+        context$1$0.t2 = context$1$0['catch'](29);
 
         console.debug('Can\'t resolve module ' + name + ' with resolver -', context$1$0.t2);
 
-      case 39:
+      case 38:
 
-        if (!path && isFallBack) {
-          path = name;
+        if (!path && multiverConfig.fallBackToParentRequire) {
+          path = moduleName;
         }
 
         if (!path) {
-          context$1$0.next = 44;
+          context$1$0.next = 43;
           break;
         }
 
         return context$1$0.abrupt('return', path);
 
-      case 44:
-        throw new Error('Can\'t resolve module [' + name + ']');
+      case 43:
+        throw new Error('Can\'t resolve require request for module [' + name + ']');
 
-      case 45:
+      case 44:
       case 'end':
         return context$1$0.stop();
     }
-  }, null, this, [[3, 9], [19, 26], [30, 36]]);
+  }, null, this, [[3, 9], [18, 25], [29, 35]]);
 }
 
 module.exports = exports['default'];

@@ -25,8 +25,6 @@ export default async function getModuleRequest(name, parentRequire, config) {
     return onload(repository);
   }
 
-  let isFallBack = !!multiverConfig.fallBackToParentRequire;
-
   let match = name.match(moduleNameRegex);
   let moduleName = match[1];
   let moduleVersionRange = match[2];
@@ -50,13 +48,13 @@ export default async function getModuleRequest(name, parentRequire, config) {
     }
   }
 
-  if (!path && isFallBack) {
-    path = name;
+  if (!path && multiverConfig.fallBackToParentRequire) {
+    path = moduleName;
   }
 
   if (path) {
     return path;
   } else {
-    throw new Error(`Can't resolve module [${name}]`)
+    throw new Error(`Can't resolve require request for module [${name}]`)
   }
 }
